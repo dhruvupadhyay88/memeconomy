@@ -1,0 +1,4 @@
+{
+    "python.analysis.extraPaths": ["api"],
+    "python.pythonPath": "C:\\Users\\dhruv\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
+}
