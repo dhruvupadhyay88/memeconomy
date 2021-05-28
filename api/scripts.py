@@ -6,6 +6,7 @@ from praw.models import MoreComments
 from psaw import PushshiftAPI
 import csv
 import datetime
+import requests, json
 
 
 def stock_table():
@@ -18,7 +19,11 @@ def stock_table():
 
         for line in csv_reader:
             stocks[line[0]] = line[0]
-    print(stocks)
+
+    stocks['SPY'] = 'SPY'
+    stocks['SPX'] = 'SPX'
+    stocks['market'] = 'market'
+    stocks['economy'] = 'economy'
 
     id = 0
     for stock in stocks:
@@ -43,61 +48,68 @@ def initial_data():
     api = PushshiftAPI()
     reddit = praw.Reddit()
     subreddit = reddit.subreddit('wallstreetbets')
+    flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "DD","GO", "A", "I"]
 
+    positive =      ['call','long','up','buy','bull','good','fire','lambo','pump','calls','diamond','bear-trap',
+                    'hands','green','rich','moon','love','potential','double','undervalued','under-valued','sexy',
+                    '🚀','💎','😎','🔥','🤑','💵','💸','💲','rocket','squeeze','short-squeeze','positive',
+                    'oversold','over-sold','recover','bounce','🌈','🏳‍🌈','🌑','🐂','CC','CCS','PMCC','LEAPS']
+
+    negative =      ['put','short','down','sell','drop','fall','lose','bear','out','bad','loss','negative',
+                    'mistake','burned','wrecked','destroyed','overvalued','over-valued','tank','trash','shit',
+                    'bull-trap','overbought','over-bought','overextended','over-extended','rip','cash-secured',
+                    '💩','🤡','👎','🙅‍♀️','🚫','😭','🐻','negative','crash','idiots','crashing','tanking']
+    
     stock_dict = {}
     stocks = StockTable.query.all()
     for i in stocks:
-        stock_dict[str(i.ticker)] = 0
+        # mentions, positive, negative
+        stock_dict[str(i.ticker)] = [0,0,0]
 
-    submissions = subreddit.search('flair:"Daily Discussion"', time_filter='day')
-
-    for submission in submissions:
-        print(submission.title)
-        print(submission.created_utc)
-        count = 0
-        #comments = api.search_comments(url=submission.url)
-        for comment in iter_top_level(submission.comments):
-            print(comment.body)
-            for word in comment.body.split():
-                if word in stock_dict:
-                    stock_dict[word] += 1
-            count+=1
-            if (count==1000):
-                break
-
-    print(stock_dict)
-
-   
+    discussion = subreddit.search('flair:"Daily Discussion"', time_filter='day')
+    top = subreddit.top(time_filter="day", limit=30)
     
+    for submissions in [discussion, top]:
+        for submission in submissions:
+            print(submission.title)
+            print(submission.created_utc)
+            print(submission.id)
+            count = 0
+            comments = submission.comments
+            fullnames = []
+            for comment in comments:
+                count+=1
+                fullnames.append('t1_'+ comment.id)
+                
+            for comment in reddit.info(fullnames):
+                p = 0
+                n = 0
+                for word in comment.body.split():
+                    if ((word == "market" or word == "economy") or (word == word.upper() and word in stock_dict and word not in flagged_words)):
+                        stock_dict[word][0] += 1
+                        stock_dict[word][1] += p
+                        stock_dict[word][2] += n
+                    if (word in positive):
+                        p = 1
+                    elif (word in negative):
+                        n = 1
 
+
+    print("Stock   Mentions   Positive   Negative ")
+    for key in stock_dict:
+        if ((stock_dict[key][0] > 10) and (key not in ['SPY','SPX','market','economy'])):
+            print('{}:    {}      {}     {}'.format(key,stock_dict[key][0],stock_dict[key][1],stock_dict[key][2]))
     
-    
+    print("")
+    p = 0
+    n = 0
+    arr = ['SPY','SPX','market','economy']
+    for key in arr:
+        p += stock_dict[key][1]
+        n += stock_dict[key][2]
 
-
-
-    # start_time = int(datetime.datetime(2021, 5, 24).timestamp())
-    # submissions = api.search_submissions(after=start_time, subreddit='wallstreetbets', filter=['url','author','title','subreddit'])
-    # for submission in submissions:
-    #     for key in stock_dict:
-    #         words = submission.title.split()
-    #         if key in words:
-    #             stock_dict[key] += 1
-
-    # for comment in comments:
-    #     for key in stock_dict:
-    #         words = comment.body.split()
-    #         if key in words:
-    #             stock_dict[key] += 1
-
-    # print(stock_dict)
-    
-
-    
-
-    # for post in subreddit.top(limit=100):
-    #      print(post.title, post.id)
-
-
+    percent = round(((p*100)/(p+n)),2)
+    print('Market Sentiment : {}% Positive'.format(percent))
 
 
    
