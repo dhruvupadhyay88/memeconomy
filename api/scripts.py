@@ -5,8 +5,10 @@ import praw
 from praw.models import MoreComments
 from psaw import PushshiftAPI
 import csv
-import datetime
+from datetime import datetime
 import requests, json
+
+# should add error handling for scraping and database interactions
 
 
 def stock_table():
@@ -48,7 +50,7 @@ def initial_data():
     api = PushshiftAPI()
     reddit = praw.Reddit()
     subreddit = reddit.subreddit('wallstreetbets')
-    flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "DD","GO", "A", "I"]
+    flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "DD","GO", "A", "I", "B", "IT", "SO", "ON", "U", "FOR", "CAN"]
 
     positive =      ['call','long','up','buy','bull','good','fire','lambo','pump','calls','diamond','bear-trap',
                     'hands','green','rich','moon','love','potential','double','undervalued','under-valued','sexy',
@@ -94,13 +96,27 @@ def initial_data():
                     elif (word in negative):
                         n = 1
 
-
     print("Stock   Mentions   Positive   Negative ")
     for key in stock_dict:
         if ((stock_dict[key][0] > 10) and (key not in ['SPY','SPX','market','economy'])):
             print('{}:    {}      {}     {}'.format(key,stock_dict[key][0],stock_dict[key][1],stock_dict[key][2]))
     
-    print("")
+
+    # add to table
+    for key in stock_dict:
+        date = datetime.today().strftime('%Y-%m-%d')
+        row = WallStreetBets(
+            stock = key,
+            mentions = stock_dict[key][0],
+            positive = stock_dict[key][1],
+            negative = stock_dict[key][2],
+            date = date
+        )
+        db.session.add(row)
+        db.session.flush()
+    db.session.commit()
+
+    print(" ")
     p = 0
     n = 0
     arr = ['SPY','SPX','market','economy']
@@ -110,8 +126,5 @@ def initial_data():
 
     percent = round(((p*100)/(p+n)),2)
     print('Market Sentiment : {}% Positive'.format(percent))
-
-
-   
 
 initial_data()
