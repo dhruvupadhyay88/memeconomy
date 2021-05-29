@@ -22,11 +22,6 @@ def stock_table():
         for line in csv_reader:
             stocks[line[0]] = line[0]
 
-    stocks['SPY'] = 'SPY'
-    stocks['SPX'] = 'SPX'
-    stocks['market'] = 'market'
-    stocks['economy'] = 'economy'
-
     id = 0
     for stock in stocks:
         id += 1
@@ -87,7 +82,7 @@ def initial_data():
                 p = 0
                 n = 0
                 for word in comment.body.split():
-                    if ((word == "market" or word == "economy") or (word == word.upper() and word in stock_dict and word not in flagged_words)):
+                    if (word == word.upper() and word in stock_dict and word not in flagged_words):
                         stock_dict[word][0] += 1
                         stock_dict[word][1] += p
                         stock_dict[word][2] += n
@@ -116,15 +111,18 @@ def initial_data():
         db.session.flush()
     db.session.commit()
 
-    print(" ")
-    p = 0
-    n = 0
-    arr = ['SPY','SPX','market','economy']
-    for key in arr:
-        p += stock_dict[key][1]
-        n += stock_dict[key][2]
-
-    percent = round(((p*100)/(p+n)),2)
-    print('Market Sentiment : {}% Positive'.format(percent))
-
+    
 initial_data()
+
+
+
+
+    # p = 0
+    # n = 0
+    # arr = ['SPY','SPX','market','economy']
+    # for key in arr:
+    #     p += stock_dict[key][1]
+    #     n += stock_dict[key][2]
+
+    # percent = round(((p*100)/(p+n)),2)
+    # print('Market Sentiment : {}% Positive'.format(percent))
