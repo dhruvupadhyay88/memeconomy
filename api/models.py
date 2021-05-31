@@ -13,3 +13,10 @@ class WallStreetBets(db.Model):
     positive = db.Column(db.Integer, nullable=False)
     negative = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
+
+class MarketSentiment(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    mentions = db.Column(db.Integer, nullable=False)
+    positive = db.Column(db.Integer, nullable=False)
+    negative = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
