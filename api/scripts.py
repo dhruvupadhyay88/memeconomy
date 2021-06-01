@@ -87,6 +87,7 @@ def initial_data():
     subreddit = reddit.subreddit('wallstreetbets')
     stock_dict = {}
     stocks = StockTable.query.all()
+    
     for i in stocks:
         # mentions, positive, negative
         stock_dict[str(i.ticker)] = [0,0,0]
@@ -96,7 +97,7 @@ def initial_data():
 
     discussion = subreddit.search('flair:"Daily Discussion"', time_filter='day')
     top = subreddit.top(time_filter="day", limit=30)
-    
+    total = 0
     for submissions in [discussion, top]:
         for submission in submissions:
             print(submission.title)
@@ -115,9 +116,10 @@ def initial_data():
             for comment in reddit.info(fullnames):
                 get_comments(comment, stock_dict, market, count2)
             
+            total += count2[0]
             print("{} comments analyzed".format(count2[0]))
             
-
+    print("{} comments analyzed in total".format(total))
 
     print("Stock   Mentions   Positive   Negative ")
     for key in stock_dict:
