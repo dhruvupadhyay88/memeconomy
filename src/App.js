@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { Container, Row, Col } from "react-bootstrap";
+import { Header } from "./Components/Header";
 
 export const App = () => {
-    useEffect(() => {
-        fetch("/api/yo")
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-            .then(data => console.log(data));
-    });
-
-    return <h1>Hi</h1>;
+    return (
+        <Wrapper fluid>
+            <Row>
+                <Header />
+            </Row>
+        </Wrapper>
+    );
 };
+
+const Wrapper = styled(Container)`
+    background-color: rgb(38, 18, 92);
+`;
