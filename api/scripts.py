@@ -10,7 +10,7 @@ import requests, json
 
 # should add error handling for scraping and database interactions
 # globals
-flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "DD","GO", "A", "I", "B", "IT", "SO", "ON", "U", "FOR", "CAN"]
+flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "ALL", "DD","GO", "A", "I", "B", "IT", "SO", "ON", "U", "FOR", "CAN"]
 positive =      ['call','long','up','buy','bull','good','fire','lambo','pump','calls','diamond','bear-trap',
                     'hands','green','rich','moon','love','potential','double','undervalued','under-valued','sexy',
                     '🚀','💎','😎','🔥','🤑','💵','💸','💲','rocket','squeeze','short-squeeze','positive',
@@ -95,29 +95,28 @@ def initial_data():
     # mentions, positive, negative
     market = [0,0,0]
 
-    discussion = subreddit.search('flair:"Daily Discussion"', time_filter='day')
     top = subreddit.top(time_filter="day", limit=30)
     total = 0
-    for submissions in [discussion, top]:
-        for submission in submissions:
-            print(submission.title)
-            print(submission.created_utc)
-            print(submission.id)
-            count1 = 0
-            count2 = [0]
-            comments = submission.comments
-            fullnames = []
-            for comment in comments:
-                count1+=1
-                add_id(comment, fullnames)
-            
-            print("{} comments retreived".format(count1))
+    
+    for submission in top:
+        print(submission.title)
+        print(submission.created_utc)
+        print(submission.id)
+        count1 = 0
+        count2 = [0]
+        comments = submission.comments
+        fullnames = []
+        for comment in comments:
+            count1+=1
+            add_id(comment, fullnames)
+        
+        print("{} comments retreived".format(count1))
 
-            for comment in reddit.info(fullnames):
-                get_comments(comment, stock_dict, market, count2)
-            
-            total += count2[0]
-            print("{} comments analyzed".format(count2[0]))
+        for comment in reddit.info(fullnames):
+            get_comments(comment, stock_dict, market, count2)
+        
+        total += count2[0]
+        print("{} comments analyzed".format(count2[0]))
             
     print("{} comments analyzed in total".format(total))
 
