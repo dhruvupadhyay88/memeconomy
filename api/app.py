@@ -22,7 +22,7 @@ def top_daily():
         info['negative'] = stock.negative
         res.append(info)
 
-    return {"data": res}
+    return jsonify(res)
 
 @app.route('/api/top/weekly', methods=['GET'])
 def top_weekly():
@@ -52,7 +52,7 @@ def top_weekly():
 
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
 
-    return {"data": sorted_data[:10]}
+    return jsonify(sorted_data[:10])
 
 @app.route('/api/top/monthly', methods=['GET'])
 def top_monthly():
@@ -80,7 +80,7 @@ def top_monthly():
         stock['negative'] = negative
         data.append(stock)
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
-    return {"data": sorted_data[:10]}
+    return jsonify(sorted_data[:10])
     
 @app.route('/api/stock/chart/', methods=['GET'])
 def stock_chart():

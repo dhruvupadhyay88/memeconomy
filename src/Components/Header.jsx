@@ -27,9 +27,9 @@ export const Header = () => {
                         Memeconomy
                     </Navbar.Brand>
                     <Nav className='mr-auto'>
-                        <Nav.Link href='#home'>Trending</Nav.Link>
-                        <Nav.Link href='#features'>Stocks</Nav.Link>
-                        <Nav.Link href='#pricing'>Market</Nav.Link>
+                        <Nav.Link href='home'>Trending</Nav.Link>
+                        <Nav.Link href='features'>Stocks</Nav.Link>
+                        <Nav.Link href='pricing'>Market</Nav.Link>
                     </Nav>
                 </NavBar>
             </Row>
@@ -39,20 +39,6 @@ export const Header = () => {
 
 const NavBar = styled(Navbar)`
     background-color: rgb(17, 24, 39);
-`;
-const CustomButton = styled(Button)`
-    background-color: rgb(34, 40, 62);
-    border-color: rgb(34, 40, 62);
-    height: 40px;
-    vertical-align: center;
-    margin: 18px 0 0 20px;
-`;
-
-const Title = styled.h4`
-    color: white;
-    margin: 15px 0 10px 4%;
-    border-right: 2px solid rgb(200, 200, 200);
-    padding: 0 20px 0 0;
 `;
 
 {
