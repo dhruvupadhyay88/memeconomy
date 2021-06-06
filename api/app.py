@@ -93,10 +93,10 @@ def stock_chart():
         obj['mentions'] = day.mentions
         obj['positive'] = day.positive
         obj['negative'] = day.negative
-        obj['date'] = day.date
+        obj['date'] = day.date.strftime("%Y-%m-%d")
         res.append(obj)
 
-    return {"data": res}
+    return jsonify(res)
 
 @app.route('/api/market/chart', methods=['GET'])
 def market_chart():
@@ -107,10 +107,10 @@ def market_chart():
         obj['mentions'] = day.mentions
         obj['positive'] = day.positive
         obj['negative'] = day.negative
-        obj['date'] = day.date
+        obj['date'] = day.date.strftime("%Y-%m-%d")
         res.append(obj)
 
-    return {"data": res}
+    return jsonify(res)
 
 
 

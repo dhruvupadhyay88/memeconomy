@@ -11,3 +11,7 @@ export const getTopWeekly = () => {
 export const getTopMonthly = () => {
     return axios.get("/api/top/monthly");
 };
+
+export const getMarketSentiment = () => {
+    return axios.get("/api/market/chart");
+};

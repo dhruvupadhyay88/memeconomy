@@ -14,46 +14,66 @@ export const Top = () => {
     const [daily, setDaily] = useState();
     const [weekly, setWeekly] = useState();
     const [monthly, setMonthly] = useState();
+    const [tableData, setTableData] = useState();
 
     useEffect(() => {
         getTopDaily().then(res => {
             setDaily(res);
+            setTableData(res.data);
             setLoading(false);
+            console.log("day");
         });
         getTopWeekly().then(res => {
             setWeekly(res);
             setLoading(false);
+            console.log("week");
         });
         getTopMonthly().then(res => {
             setMonthly(res);
             setLoading(false);
+            console.log("month");
         });
     }, []);
 
-    getTableData = () => {};
-    return (
-        <Container>
-            <Row className='justify-content-center'>
-                <Title>{`WallStreetBets Top Stocks Last ${time}`}</Title>
-            </Row>
-            <Row
-                className='justify-content-center'
-                style={{ margin: "10px 0 0 0" }}
-            >
-                <TimeButton onClick={() => setTime("Day")}>Day</TimeButton>
-                <TimeButton onClick={() => setTime("Week")}>Week</TimeButton>
-                <TimeButton onClick={() => setTime("Month")}>Month</TimeButton>
-            </Row>
+    useEffect(() => {
+        if (time == "Day" && daily) {
+            setTableData(daily.data);
+        } else if (time == "Week" && weekly) {
+            setTableData(weekly.data);
+        } else if (time == "Month" && monthly) {
+            setTableData(monthly.data);
+        }
+    }, [time]);
 
-            {daily && (
+    return (
+        <Row>
+            <Container>
+                <Row className='justify-content-center'>
+                    <Title>{`WallStreetBets Top Stocks Last ${time}`}</Title>
+                </Row>
                 <Row
                     className='justify-content-center'
-                    style={{ margin: "20px 0 0 0" }}
+                    style={{ margin: "10px 0 0 0" }}
                 >
-                    <TopChart tableData={daily.data} />
+                    <TimeButton onClick={() => setTime("Day")}>Day</TimeButton>
+                    <TimeButton onClick={() => setTime("Week")}>
+                        Week
+                    </TimeButton>
+                    <TimeButton onClick={() => setTime("Month")}>
+                        Month
+                    </TimeButton>
                 </Row>
-            )}
-        </Container>
+
+                {tableData && (
+                    <Row
+                        className='justify-content-center'
+                        style={{ margin: "20px 0 12px 0" }}
+                    >
+                        <TopChart tableData={tableData} />
+                    </Row>
+                )}
+            </Container>
+        </Row>
     );
 };
 

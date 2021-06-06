@@ -28,8 +28,8 @@ export const Header = () => {
                     </Navbar.Brand>
                     <Nav className='mr-auto'>
                         <Nav.Link href='home'>Trending</Nav.Link>
-                        <Nav.Link href='features'>Stocks</Nav.Link>
-                        <Nav.Link href='pricing'>Market</Nav.Link>
+                        <Nav.Link href='stocks'>Stocks</Nav.Link>
+                        <Nav.Link href='market'>Market</Nav.Link>
                     </Nav>
                 </NavBar>
             </Row>
@@ -40,15 +40,3 @@ export const Header = () => {
 const NavBar = styled(Navbar)`
     background-color: rgb(17, 24, 39);
 `;
-
-{
-    /* <Title>
-<FaChartLine style={{ marginRight: "10px" }} />
-Memeconomy
-</Title>
-<ButtonGroup>
-<CustomButton variant='primary'>Left</CustomButton>
-<CustomButton variant='primary'>Middle</CustomButton>
-<CustomButton variant='primary'>Right</CustomButton>
-</ButtonGroup> */
-}
