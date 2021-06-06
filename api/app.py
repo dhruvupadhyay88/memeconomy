@@ -12,7 +12,7 @@ def hello_world():
 
 @app.route('/api/top/daily', methods=['GET'])
 def top_daily():
-    stocks = WallStreetBets.query.order_by(WallStreetBets.date.desc(), WallStreetBets.mentions.desc()).limit(10).all()
+    stocks = WallStreetBets.query.order_by(WallStreetBets.date.desc(), WallStreetBets.mentions.desc()).limit(15).all()
     res = []
     for stock in stocks:
         info = {}
@@ -52,7 +52,7 @@ def top_weekly():
 
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
 
-    return jsonify(sorted_data[:10])
+    return jsonify(sorted_data[:15])
 
 @app.route('/api/top/monthly', methods=['GET'])
 def top_monthly():
@@ -80,7 +80,7 @@ def top_monthly():
         stock['negative'] = negative
         data.append(stock)
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
-    return jsonify(sorted_data[:10])
+    return jsonify(sorted_data[:15])
     
 @app.route('/api/stock/chart/', methods=['GET'])
 def stock_chart():

@@ -10,7 +10,7 @@ import requests, json
 
 # should add error handling for scraping and database interactions
 # globals
-flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "ALL", "DD","GO", "A", "I", "B", "IT", "SO", "ON", "U", "FOR", "CAN"]
+flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "ALL", "DD","GO", "A", "ARE", "I", "B", "IT", "SO", "ON", "U", "FOR", "CAN"]
 positive =      ['call','long','up','buy','bull','good','fire','lambo','pump','calls','diamond','bear-trap',
                     'hands','green','rich','moon','love','potential','double','undervalued','under-valued','sexy',
                     '🚀','💎','😎','🔥','🤑','💵','💸','💲','rocket','squeeze','short-squeeze','positive',

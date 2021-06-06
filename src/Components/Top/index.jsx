@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Container, Row, Col, Button, ButtonGroup } from "react-bootstrap";
+import { Container, Row, Button, Spinner } from "react-bootstrap";
 import { TopChart } from "./TopChart";
 import {
     getTopDaily,
@@ -36,14 +36,23 @@ export const Top = () => {
     }, []);
 
     useEffect(() => {
-        if (time == "Day" && daily) {
-            setTableData(daily.data);
-        } else if (time == "Week" && weekly) {
-            setTableData(weekly.data);
-        } else if (time == "Month" && monthly) {
-            setTableData(monthly.data);
+        if (time === "Day") {
+            if (daily) {
+                setTableData(daily.data);
+                setLoading(false);
+            } else setLoading(true);
+        } else if (time === "Week") {
+            if (weekly) {
+                setTableData(weekly.data);
+                setLoading(false);
+            } else setLoading(true);
+        } else if (time === "Month") {
+            if (monthly) {
+                setTableData(monthly.data);
+                setLoading(false);
+            } else setLoading(true);
         }
-    }, [time]);
+    }, [time, loading]);
 
     return (
         <Row>
@@ -64,12 +73,19 @@ export const Top = () => {
                     </TimeButton>
                 </Row>
 
-                {tableData && (
+                {tableData && !loading ? (
                     <Row
                         className='justify-content-center'
                         style={{ margin: "20px 0 12px 0" }}
                     >
                         <TopChart tableData={tableData} />
+                    </Row>
+                ) : (
+                    <Row
+                        className='justify-content-center'
+                        style={{ margin: "20px 0 12px 0" }}
+                    >
+                        <Loading animation='border' variant='light' />
                     </Row>
                 )}
             </Container>
@@ -86,4 +102,8 @@ const TimeButton = styled(Button)`
     background-color: rgb(24, 51, 78);
     border-color: rgb(24, 51, 78);
     margin: 0 5px 0 5px;
+`;
+
+const Loading = styled(Spinner)`
+    margin: 10% 0 35% 0;
 `;
