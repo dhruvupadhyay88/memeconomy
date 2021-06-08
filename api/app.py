@@ -3,6 +3,9 @@ from flask import Flask, request, render_template, jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from index import *
 from models import *
+import praw
+from praw.models import MoreComments
+from psaw import PushshiftAPI
 
 @app.route('/', methods=['GET'])
 def hello_world():
@@ -24,31 +27,28 @@ def top_daily():
 
     return jsonify(res)
 
+
 @app.route('/api/top/weekly', methods=['GET'])
 def top_weekly():
-    stock_dict = {}
+    stocks = {}
     tickers = StockTable.query.all()
     for i in tickers:
         # mentions, positive, negative
-        stock_dict[str(i.ticker)] = [0,0,0]
+        stocks[str(i.ticker)] = {}
+        stocks[str(i.ticker)]['stock'] = str(i.ticker)
+        stocks[str(i.ticker)]['mentions'] = 0
+        stocks[str(i.ticker)]['positive'] = 0
+        stocks[str(i.ticker)]['negative'] = 0
 
-    stocks = WallStreetBets.query.order_by(WallStreetBets.date.desc())
+    query = WallStreetBets.query.order_by(WallStreetBets.date.desc()).limit(7*4245).all()
     data = []
-    for key in stock_dict:
-        week = stocks.filter(WallStreetBets.stock == key).limit(7).all()
-        stock = {}
-        mentions = 0
-        positive = 0
-        negative = 0
-        for day in week:
-            mentions += day.mentions
-            positive += day.positive
-            negative += day.negative
-        stock['stock'] = key
-        stock['mentions'] = mentions
-        stock['positive'] = positive
-        stock['negative'] = negative
-        data.append(stock)
+    for item in query:
+        stocks[item.stock]['mentions'] += item.mentions
+        stocks[item.stock]['positive'] += item.positive
+        stocks[item.stock]['negative'] += item.negative
+
+    for key in stocks: 
+        data.append(stocks[key])
 
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
 
@@ -56,30 +56,28 @@ def top_weekly():
 
 @app.route('/api/top/monthly', methods=['GET'])
 def top_monthly():
-    stock_dict = {}
+    stocks = {}
     tickers = StockTable.query.all()
     for i in tickers:
         # mentions, positive, negative
-        stock_dict[str(i.ticker)] = [0,0,0]
+        stocks[str(i.ticker)] = {}
+        stocks[str(i.ticker)]['stock'] = str(i.ticker)
+        stocks[str(i.ticker)]['mentions'] = 0
+        stocks[str(i.ticker)]['positive'] = 0
+        stocks[str(i.ticker)]['negative'] = 0
 
-    stocks = WallStreetBets.query.order_by(WallStreetBets.date.desc())
+    query = WallStreetBets.query.order_by(WallStreetBets.date.desc()).limit(30*4245).all()
     data = []
-    for key in stock_dict:
-        month = stocks.filter(WallStreetBets.stock == key).limit(30).all()
-        stock = {}
-        mentions = 0
-        positive = 0
-        negative = 0
-        for day in month:
-            mentions += day.mentions
-            positive += day.positive
-            negative += day.negative
-        stock['stock'] = key
-        stock['mentions'] = mentions
-        stock['positive'] = positive
-        stock['negative'] = negative
-        data.append(stock)
+    for item in query:
+        stocks[item.stock]['mentions'] += item.mentions
+        stocks[item.stock]['positive'] += item.positive
+        stocks[item.stock]['negative'] += item.negative
+
+    for key in stocks: 
+        data.append(stocks[key])
+
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
+
     return jsonify(sorted_data[:15])
     
 @app.route('/api/stock/chart/', methods=['GET'])
@@ -112,7 +110,24 @@ def market_chart():
 
     return jsonify(res)
 
-
+@app.route('/api/market/posts', methods=['GET'])
+def market_posts():
+    api = PushshiftAPI()
+    reddit = praw.Reddit()
+    subreddit = reddit.subreddit('wallstreetbets')
+    posts = subreddit.search('market', sort='hot',time_filter="week", limit=25)
+    data = []
+    for post in posts: 
+        obj = {}
+        obj['title'] = post.title
+        obj['time'] = post.created_utc
+        obj['link'] = post.permalink
+        obj['upvotes'] = post.score
+        obj['id'] = post.id
+        obj['author'] = post.author.name
+        data.append(obj)
+    
+    return jsonify(data)
 
 
 

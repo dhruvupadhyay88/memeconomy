@@ -64,11 +64,22 @@ export const Top = () => {
                     className='justify-content-center'
                     style={{ margin: "10px 0 0 0" }}
                 >
-                    <TimeButton onClick={() => setTime("Day")}>Day</TimeButton>
-                    <TimeButton onClick={() => setTime("Week")}>
+                    <TimeButton
+                        disabled={time === "Day"}
+                        onClick={() => setTime("Day")}
+                    >
+                        Day
+                    </TimeButton>
+                    <TimeButton
+                        disabled={time === "Week"}
+                        onClick={() => setTime("Week")}
+                    >
                         Week
                     </TimeButton>
-                    <TimeButton onClick={() => setTime("Month")}>
+                    <TimeButton
+                        disabled={time === "Month"}
+                        onClick={() => setTime("Month")}
+                    >
                         Month
                     </TimeButton>
                 </Row>
