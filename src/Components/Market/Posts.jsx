@@ -3,8 +3,6 @@ import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
 export const Posts = ({ postsData }) => {
-    console.log("posts", postsData);
-
     return postsData.map((post, index) => {
         return (
             <Card

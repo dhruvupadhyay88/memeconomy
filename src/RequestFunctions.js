@@ -19,3 +19,9 @@ export const getMarketSentiment = () => {
 export const getMarketPosts = () => {
     return axios.get("/api/market/posts");
 };
+
+export const getIndexData = symbol => {
+    return axios.get(
+        `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=8HCVW802X7Q921Y3`
+    );
+};

@@ -17,6 +17,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 api/.env
 api/praw.ini
 npm-debug.log*
