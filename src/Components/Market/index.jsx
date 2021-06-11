@@ -13,12 +13,8 @@ import axios from "axios";
 export const Market = () => {
     const [tableData, setTableData] = useState();
     const [postsData, setPostsData] = useState();
-    const [SPY, setSPY] = useState();
-    const [QQQ, setQQQ] = useState();
-    const [DIA, setDIA] = useState();
     const [chartLoading, setChartLoading] = useState(true);
     const [postsLoading, setPostsLoading] = useState(true);
-    const [indexLoading, setIndexLoading] = useState(true);
 
     useEffect(() => {
         getMarketSentiment().then(res => {
@@ -31,18 +27,8 @@ export const Market = () => {
             setPostsLoading(false);
             console.log(res.data);
         });
-        // getIndexData("SPY").then(res => {
-        //     setSPY(res.data);
-        // });
-        // getIndexData("QQQ").then(res => {
-        //     setQQQ(res.data);
-        // });
-        // getIndexData("DIA").then(res => {
-        //     setDIA(res.data);
-        // });
     }, []);
 
-    console.log(SPY, QQQ, DIA);
     return (
         <Row>
             <Container>

@@ -115,7 +115,7 @@ def market_posts():
     api = PushshiftAPI()
     reddit = praw.Reddit()
     subreddit = reddit.subreddit('wallstreetbets')
-    posts = subreddit.search('market', sort='hot',time_filter="week", limit=25)
+    posts = subreddit.search('market', sort='top',time_filter="week", limit=20)
     data = []
     for post in posts: 
         obj = {}
