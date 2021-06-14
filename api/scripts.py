@@ -5,7 +5,7 @@ import praw
 from praw.models import MoreComments
 from psaw import PushshiftAPI
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests, json
 
 # should add error handling for scraping and database interactions

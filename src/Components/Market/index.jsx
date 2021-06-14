@@ -51,6 +51,9 @@ export const Market = () => {
                         <Loading animation='border' variant='light' />
                     </Row>
                 )}
+                <Row className='justify-content-center'>
+                    <Title>{`Market Related Posts`}</Title>
+                </Row>
                 {postsData && !postsLoading ? (
                     <Row
                         className='justify-content-center'

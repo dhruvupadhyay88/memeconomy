@@ -125,6 +125,7 @@ def market_posts():
         obj['upvotes'] = post.score
         obj['id'] = post.id
         obj['author'] = post.author.name
+        obj['comments'] = post.num_comments
         data.append(obj)
     
     return jsonify(data)
