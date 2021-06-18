@@ -25,3 +25,15 @@ export const getIndexData = symbol => {
         `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=8HCVW802X7Q921Y3`
     );
 };
+
+export const getStockSentiment = stock => {
+    return axios.get(`/api/stock/chart?stock=${stock}`);
+};
+
+export const getStockPosts = stock => {
+    return axios.get(`/api/market/posts?stock=${stock}`);
+};
+
+export const getStockList = () => {
+    return axios.get("/api/stock/list");
+};

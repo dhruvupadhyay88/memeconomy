@@ -13,6 +13,9 @@ def hello_world():
         'name': 'Hello World'
     }
 
+
+
+
 @app.route('/api/top/daily', methods=['GET'])
 def top_daily():
     stocks = WallStreetBets.query.order_by(WallStreetBets.date.desc(), WallStreetBets.mentions.desc()).limit(15).all()
@@ -80,7 +83,7 @@ def top_monthly():
 
     return jsonify(sorted_data[:15])
     
-@app.route('/api/stock/chart/', methods=['GET'])
+@app.route('/api/stock/chart', methods=['GET'])
 def stock_chart():
     stock = request.args.get('stock')
     data = WallStreetBets.query.filter(WallStreetBets.stock == str(stock)).order_by(WallStreetBets.date.desc()).limit(30).all()
@@ -130,8 +133,38 @@ def market_posts():
     
     return jsonify(data)
 
+@app.route('/api/stock/posts', methods=['GET'])
+def stock_posts():
+    stock = request.args.get('stock')
+    api = PushshiftAPI()
+    reddit = praw.Reddit()
+    subreddit = reddit.subreddit('wallstreetbets')
+    posts = subreddit.search(stock, sort='top',time_filter="week", limit=20)
+    data = []
+    for post in posts: 
+        obj = {}
+        obj['title'] = post.title
+        obj['time'] = post.created_utc
+        obj['link'] = post.permalink
+        obj['upvotes'] = post.score
+        obj['id'] = post.id
+        obj['author'] = post.author.name
+        obj['comments'] = post.num_comments
+        data.append(obj)
+    
+    return jsonify(data)
 
+@app.route('/api/stock/list', methods=['GET'])
+def get_stocks():
+    stocks = StockTable.query.all()
+    res = []
+    for stock in stocks:
+        obj = {}
+        obj['stock'] = stock.ticker
+        obj['id'] = stock.id
+        res.append(obj)
 
+    return jsonify(res)
 
 if __name__ == '__main__':
     app.run(debug=True)

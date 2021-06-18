@@ -7,7 +7,7 @@ import {
     getIndexData,
 } from "../../RequestFunctions";
 import { MarketChart } from "./MarketChart";
-import { Posts } from "./Posts";
+import { Posts } from "../Posts";
 import axios from "axios";
 
 export const Market = () => {

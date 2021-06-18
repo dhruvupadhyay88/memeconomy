@@ -5,6 +5,7 @@ import { Header } from "./Components/Header";
 import { Footer } from "./Components/Footer";
 import { Top } from "./Components/Top";
 import { Market } from "./Components/Market";
+import { Stock } from "./Components/Stock";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 export const App = () => {
@@ -16,6 +17,7 @@ export const App = () => {
                 </Row>
                 <Route path={["/", "/home"]} exact component={Top} />
                 <Route path={"/market"} exact component={Market} />
+                <Route path={"/stocks"} exact component={Stock} />
                 <Row>
                     <Footer />
                 </Row>
