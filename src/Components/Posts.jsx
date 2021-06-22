@@ -76,7 +76,7 @@ const Post = styled.div`
 
 const Title = styled.h5`
     margin: 10px 0 0 30px;
-    color: rgb(150, 150, 150);
+    color: rgb(200, 200, 200);
     width: 90%;
 `;
 

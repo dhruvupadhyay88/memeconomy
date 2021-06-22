@@ -31,7 +31,7 @@ export const getStockSentiment = stock => {
 };
 
 export const getStockPosts = stock => {
-    return axios.get(`/api/market/posts?stock=${stock}`);
+    return axios.get(`/api/stock/posts?stock=${stock}`);
 };
 
 export const getStockList = () => {

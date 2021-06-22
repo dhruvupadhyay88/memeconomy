@@ -87,7 +87,7 @@ export const Top = () => {
                 {tableData && !loading ? (
                     <Row
                         className='justify-content-center'
-                        style={{ margin: "20px 0 12px 0" }}
+                        style={{ margin: "20px 0 12px 0", height: "80%" }}
                     >
                         <TopChart tableData={tableData} />
                     </Row>

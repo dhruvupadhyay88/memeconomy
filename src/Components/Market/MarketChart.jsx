@@ -30,7 +30,7 @@ export const MarketChart = ({ tableData }) => {
                 data: getData(tableData),
                 fill: true,
                 borderColor: "rgb(35, 219, 21)",
-                tension: 0.2,
+                tension: 0.4,
             },
         ],
     };

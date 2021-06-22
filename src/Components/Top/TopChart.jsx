@@ -19,6 +19,17 @@ export const TopChart = ({ tableData }) => {
         return arr;
     };
 
+    const getSentiment = data => {
+        var arr = [];
+        data.map(data => {
+            const percent = Math.round(
+                (data.positive * 100) / (data.positive + data.negative)
+            );
+            arr.push(percent);
+        });
+        return arr.reverse();
+    };
+
     const data = {
         labels: getLabels(tableData),
         datasets: [
@@ -55,7 +66,8 @@ export const TopChart = ({ tableData }) => {
     };
     const options = {
         maintainAspectRatio: false,
+        responsive: true,
     };
 
-    return <Bar data={data} />;
+    return <Bar data={data} options={options} />;
 };

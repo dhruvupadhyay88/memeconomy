@@ -128,6 +128,7 @@ def initial_data():
     percent = round(((market[1]*100)/(market[1] + market[2])),2)
     print('Market Sentiment : {}% Positive'.format(percent))
 
+    #date = (datetime.today()-timedelta(days=1)).strftime('%Y-%m-%d')
     date = datetime.today().strftime('%Y-%m-%d')
 
     # add to wsb table
