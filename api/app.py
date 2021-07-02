@@ -13,9 +13,6 @@ def hello_world():
         'name': 'Hello World'
     }
 
-
-
-
 @app.route('/api/top/daily', methods=['GET'])
 def top_daily():
     stocks = WallStreetBets.query.order_by(WallStreetBets.date.desc(), WallStreetBets.mentions.desc()).limit(15).all()
@@ -28,7 +25,9 @@ def top_daily():
         info['negative'] = stock.negative
         res.append(info)
 
-    return jsonify(res)
+    res = jsonify(res)
+    res.headers.add("Access-Control-Allow-Origin", "*")
+    return res
 
 
 @app.route('/api/top/weekly', methods=['GET'])
@@ -55,7 +54,9 @@ def top_weekly():
 
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
 
-    return jsonify(sorted_data[:15])
+    res = jsonify(sorted_data[:15])
+    res.headers.add("Access-Control-Allow-Origin", "*")
+    return res
 
 @app.route('/api/top/monthly', methods=['GET'])
 def top_monthly():
@@ -81,7 +82,9 @@ def top_monthly():
 
     sorted_data = sorted(data, key = lambda i: i['mentions'], reverse=True)
 
-    return jsonify(sorted_data[:15])
+    res = jsonify(sorted_data[:15])
+    res.headers.add("Access-Control-Allow-Origin", "*")
+    return res
     
 @app.route('/api/stock/chart', methods=['GET'])
 def stock_chart():

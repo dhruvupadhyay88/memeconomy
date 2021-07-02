@@ -11,15 +11,7 @@ export const Posts = ({ postsData }) => {
         return str;
     };
 
-    const formatUpvotes = num => {
-        const q = (num - (num % 1000)) / 1000;
-        const r = num % 1000;
-        const l = Math.round((r / 1000).toFixed(2) * 100);
-
-        return `${q}.${l}k`;
-    };
-
-    const formatComments = num => {
+    const formatNumber = num => {
         if (num > 1000) {
             const q = (num - (num % 1000)) / 1000;
             const r = num % 1000;
@@ -29,6 +21,7 @@ export const Posts = ({ postsData }) => {
             return num;
         }
     };
+
     return postsData.map((post, index) => {
         return (
             <Post>
@@ -36,13 +29,13 @@ export const Posts = ({ postsData }) => {
                 <Bottom>
                     <Upvote>
                         <ImArrowUp style={{ margin: "0 0 8px 0" }} />{" "}
-                        {formatUpvotes(post.upvotes)}
+                        {formatNumber(post.upvotes)}
                     </Upvote>
                     <Comments>
                         <BiCommentDetail
                             style={{ margin: "4px 4px 8px 10px" }}
                         />
-                        {formatComments(post.comments)}
+                        {formatNumber(post.comments)}
                     </Comments>
                     <Link
                         target='_blank'

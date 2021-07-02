@@ -8,8 +8,8 @@ import csv
 from datetime import datetime, timedelta
 import requests, json
 
-# should add error handling for scraping and database interactions
-# globals
+
+
 flagged_words =    ["YOLO", "PUMP", "RH", "EOD", "IPO", "ATH", "ALL", "DD","GO", "A", "ARE", "I", "B", "IT", "SO", "ON", "U", "FOR", "CAN"]
 positive =      ['call','long','up','buy','bull','good','fire','lambo','pump','calls','diamond','bear-trap',
                     'hands','green','rich','moon','love','potential','double','undervalued','under-valued','sexy',
@@ -42,6 +42,19 @@ def stock_table():
         db.session.add(row)
         db.session.flush()
     db.session.commit()
+
+def test():
+    row = MarketSentiment(
+        mentions = 50,
+        positive = 16,
+        negative = 8,
+        date = datetime.today().strftime('%Y-%m-%d')
+    )
+    db.session.add(row)
+    print('bruh')
+    db.session.flush()
+    db.session.commit()
+
 
 def get_comments(comment, stock_dict, market, count):
     count[0] += 1
@@ -81,7 +94,7 @@ def add_id(comment, fullnames):
     except:
         pass
 
-def initial_data():
+def update():
     api = PushshiftAPI()
     reddit = praw.Reddit()
     subreddit = reddit.subreddit('wallstreetbets')
@@ -132,8 +145,10 @@ def initial_data():
     date = datetime.today().strftime('%Y-%m-%d')
 
     # add to wsb table
+    c = 1
     for key in stock_dict:
-        
+        print(c)
+        c += 1
         row = WallStreetBets(
             stock = key,
             mentions = stock_dict[key][0],
@@ -156,24 +171,4 @@ def initial_data():
     db.session.flush()
     db.session.commit()
 
-initial_data()
-
-
-
-
-    # p = 0
-    # n = 0
-    # arr = ['SPY','SPX','market','economy']
-    # for key in arr:
-    #     p += stock_dict[key][1]
-    #     n += stock_dict[key][2]
-
-    # percent = round(((p*100)/(p+n)),2)
-    # print('Market Sentiment : {}% Positive'.format(percent))
-
-    # def iter_top_level(comments):
-    # for top_level_comment in comments:
-    #     if isinstance(top_level_comment, MoreComments):
-    #         yield from iter_top_level(top_level_comment.comments())
-    #     else:
-    #         yield top_level_comment
+update()

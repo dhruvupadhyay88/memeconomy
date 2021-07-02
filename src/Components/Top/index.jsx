@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Container, Row, Button, Spinner } from "react-bootstrap";
 import { TopChart } from "./TopChart";
+import { SentimentChart } from "./SentimentChart";
 import {
     getTopDaily,
     getTopWeekly,
@@ -15,6 +16,7 @@ export const Top = () => {
     const [weekly, setWeekly] = useState();
     const [monthly, setMonthly] = useState();
     const [tableData, setTableData] = useState();
+    const [toggle, setToggle] = useState("Mentions");
 
     useEffect(() => {
         getTopDaily().then(res => {
@@ -82,6 +84,20 @@ export const Top = () => {
                     >
                         Month
                     </TimeButton>
+                    {tableData && !loading && (
+                        <ToggleButton
+                            variant='success'
+                            onClick={() => {
+                                const newToggle =
+                                    toggle === "Mentions"
+                                        ? "Sentiment"
+                                        : "Mentions";
+                                setToggle(newToggle);
+                            }}
+                        >{`View ${
+                            toggle === "Mentions" ? "Sentiment" : "Mentions"
+                        }`}</ToggleButton>
+                    )}
                 </Row>
 
                 {tableData && !loading ? (
@@ -89,7 +105,11 @@ export const Top = () => {
                         className='justify-content-center'
                         style={{ margin: "20px 0 12px 0", height: "80%" }}
                     >
-                        <TopChart tableData={tableData} />
+                        {toggle === "Mentions" ? (
+                            <TopChart tableData={tableData} />
+                        ) : (
+                            <SentimentChart tableData={tableData} />
+                        )}
                     </Row>
                 ) : (
                     <Row
@@ -115,6 +135,9 @@ const TimeButton = styled(Button)`
     margin: 0 5px 0 5px;
 `;
 
+const ToggleButton = styled(Button)`
+    margin: 0 5px 0 5px;
+`;
 const Loading = styled(Spinner)`
     margin: 10% 0 35% 0;
 `;

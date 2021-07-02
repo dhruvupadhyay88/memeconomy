@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const url = "https://memeconomy-api.herokuapp.com/";
 export const getTopDaily = () => {
     return axios.get("/api/top/daily");
 };
