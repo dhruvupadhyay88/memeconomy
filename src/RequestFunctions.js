@@ -2,23 +2,23 @@ import axios from "axios";
 
 const url = "https://memeconomy-api.herokuapp.com/";
 export const getTopDaily = () => {
-    return axios.get("/api/top/daily");
+    return axios.get(url + "/api/top/daily");
 };
 
 export const getTopWeekly = () => {
-    return axios.get("/api/top/weekly");
+    return axios.get(url + "/api/top/weekly");
 };
 
 export const getTopMonthly = () => {
-    return axios.get("/api/top/monthly");
+    return axios.get(url + "/api/top/monthly");
 };
 
 export const getMarketSentiment = () => {
-    return axios.get("/api/market/chart");
+    return axios.get(url + "/api/market/chart");
 };
 
 export const getMarketPosts = () => {
-    return axios.get("/api/market/posts");
+    return axios.get(url + "/api/market/posts");
 };
 
 export const getIndexData = symbol => {
@@ -28,13 +28,13 @@ export const getIndexData = symbol => {
 };
 
 export const getStockSentiment = stock => {
-    return axios.get(`/api/stock/chart?stock=${stock}`);
+    return axios.get(url + `/api/stock/chart?stock=${stock}`);
 };
 
 export const getStockPosts = stock => {
-    return axios.get(`/api/stock/posts?stock=${stock}`);
+    return axios.get(url + `/api/stock/posts?stock=${stock}`);
 };
 
 export const getStockList = () => {
-    return axios.get("/api/stock/list");
+    return axios.get(url + "/api/stock/list");
 };
