@@ -1,9 +1,9 @@
 # Memeconomy 
 
-View Project at: https://memeconomy.netlify.app/   \
+View Project at: https://memeconomy.netlify.app/   
 
-Add ReadMe... \
+Add ReadMe... 
 
 Front-end: React, deployed on Netlify \
 Back-end: Flask, deployed on Heroku  \
-Database: Microsoft Azure SQL database  \
+Database: Microsoft Azure SQL database  
