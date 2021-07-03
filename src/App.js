@@ -12,12 +12,14 @@ export const App = () => {
     return (
         <Router>
             <Wrapper fluid>
-                <Row>
-                    <Header />
-                </Row>
-                <Route path={["/", "/home"]} exact component={Top} />
-                <Route path={"/market"} exact component={Market} />
-                <Route path={"/stocks"} exact component={Stock} />
+                <Main>
+                    <Row>
+                        <Header />
+                    </Row>
+                    <Route path={["/", "/home"]} exact component={Top} />
+                    <Route path={"/market"} exact component={Market} />
+                    <Route path={"/stocks"} exact component={Stock} />
+                </Main>
                 <Row>
                     <Footer />
                 </Row>
@@ -32,5 +34,8 @@ const Wrapper = styled(Container)`
     -webkit-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 100%;
+`;
+
+const Main = styled.div`
+    min-height: 95vh;
 `;

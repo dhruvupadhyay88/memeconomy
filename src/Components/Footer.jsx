@@ -28,4 +28,5 @@ export const Footer = () => {
 
 const NavBar = styled(Navbar)`
     background-color: rgb(17, 24, 39);
+    min-height: 5vh;
 `;
