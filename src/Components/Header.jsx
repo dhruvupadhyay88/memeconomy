@@ -17,7 +17,7 @@ export const Header = () => {
             <Row style={{ width: "auto", backgroundColor: "rgb(17, 24, 39)" }}>
                 <NavBar variant='dark' style={{ width: "auto" }}>
                     <Navbar.Brand
-                        href='#home'
+                        href='/'
                         style={{
                             padding: "0 16px 0 0",
                             borderRight: "1px solid rgb(100,100,100)",
