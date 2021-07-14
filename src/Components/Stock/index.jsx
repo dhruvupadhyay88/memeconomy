@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Container, Row, Spinner, Form } from "react-bootstrap";
+import { Container, Row, Spinner, Form, Button } from "react-bootstrap";
 import {
     getStockSentiment,
     getStockPosts,
     getStockList,
 } from "../../RequestFunctions";
 import { StockChart } from "./StockChart";
+import { StockSentimentChart } from "./StockSentimentChart";
 import Select from "react-select";
 import { Posts } from "../Posts";
 
@@ -17,6 +18,7 @@ export const Stock = () => {
     const [stock, setStock] = useState();
     const [chartLoading, setChartLoading] = useState(true);
     const [postsLoading, setPostsLoading] = useState(true);
+    const [toggle, setToggle] = useState("Mentions");
 
     useEffect(() => {
         getStockList().then(res => {
@@ -81,13 +83,33 @@ export const Stock = () => {
                 {stock && tableData && !chartLoading && (
                     <>
                         <Row className='justify-content-center'>
-                            <Title>{`${stock} Mentions over Time`}</Title>
+                            <Title>{`${stock} ${toggle} over Time`}</Title>
+                            {tableData && !chartLoading && (
+                                <ToggleButton
+                                    variant='success'
+                                    onClick={() => {
+                                        const newToggle =
+                                            toggle === "Mentions"
+                                                ? "Sentiment"
+                                                : "Mentions";
+                                        setToggle(newToggle);
+                                    }}
+                                >{`View ${
+                                    toggle === "Mentions"
+                                        ? "Sentiment"
+                                        : "Mentions"
+                                }`}</ToggleButton>
+                            )}
                         </Row>
                         <Row
                             className='justify-content-center'
                             style={{ margin: "20px 0 12px 0" }}
                         >
-                            <StockChart tableData={tableData} />
+                            {toggle === "Mentions" ? (
+                                <StockChart tableData={tableData} />
+                            ) : (
+                                <StockSentimentChart tableData={tableData} />
+                            )}
                         </Row>
                     </>
                 )}
@@ -124,6 +146,10 @@ export const Stock = () => {
 const Title = styled.h4`
     color: white;
     margin: 20px 0 0 0;
+`;
+
+const ToggleButton = styled(Button)`
+    margin: 18px 5px 0 15px;
 `;
 
 const SubTitle = styled.h5`
