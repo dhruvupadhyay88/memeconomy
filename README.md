@@ -19,7 +19,8 @@ Back-end: Flask, deployed on Heroku  \
 Database: Microsoft Azure SQL database  
 
 ## Demo
-
+![trending](https://github.com/dhruvupadhyay88/memeconomy/blob/master/assets/trending.gif)
+![stocks_and_market](https://github.com/dhruvupadhyay88/memeconomy/blob/master/assets/stocks_and_market.gif)
 
 
 
