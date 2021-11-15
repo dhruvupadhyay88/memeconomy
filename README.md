@@ -15,7 +15,7 @@ Memeconomy is a project that analyzes and showcases trends in stocks and the ove
 - View and navigate to popular posts related to a specific stock or overall market
 
 ## Tools
-Front-end: React, website deployed on Netlify \ 
+Front-end: React, website deployed on Netlify \
 Back-end: Flask, deployed on Heroku \
 Database: Microsoft Azure SQL database
 
