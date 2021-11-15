@@ -1,6 +1,6 @@
 # Memeconomy 
 
-View Project at: https://memeconomy.netlify.app/ 
+View Project at: https://memeconomy.netlify.app/ \
 Update: Website no longer works due to cancelled Azure database subscription
 
 ## Overview
