@@ -4,7 +4,7 @@ View Project at: https://memeconomy.netlify.app/ \
 Update: Website no longer works due to cancelled Azure database subscription
 
 ## Overview
-Memeconomy is a project that analyzes and showcases trends in stocks and the overall market found in popular investing subreddit r/wallstreetbets. For some people, this information can be useful to make trades based on sentiment, hype and momentum. For others, this can serve as a list of stocks to avoid since they are being targeted by retail investors.
+Memeconomy is a project that analyzes and showcases trends in stocks and the overall market found in popular investing subreddits. For some people, this information can be useful to make trades based on sentiment, hype and momentum. For others, this can serve as a list of stocks to avoid since they are being targeted by retail investors.
 
 ## Features 
 - Top 15 stocks in daily, weekly and monthly time frames
